@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="./data.js"></script>
+    <script>
+        // Receiving the data from the data.js file.
+        const dataArray = data;
+        // Made a mockup of the filteringObject.
+        const filteringObject = {category:'bal'};
+
+        filterArrayUsingObjectParameters(dataArray, filteringObject);
+
+        function filterArrayUsingObjectParameters(dataArray, filteringObject) {
+
+            // The main logic to solve this problem is to match the values in the filteringObject with the dataArray.
+            // If the values is NOT matched, we need to remove these values from the dataArray, then 
+            // only the matched values would be on the dataArray, so then we can show it.
+
+            // What I did here was map through the filteringObject to see if any value of it matches the dataArray values.
+            Object.keys(filteringObject).map(key => {
+                dataArray.map((data, index) => {        
+                    
+                    // What I did here is check if key value does not matches with the filteringObject
+                    // So then if it doesn't, we remove from dataArray the object from that position.
+                    if (data[key] !== filteringObject[key]) {
+                        dataArray.splice( index, 1 );
+                    }
+                    // We need to check if some fields are an array, because we need to loop through them to see if the
+                    // values is the same. In this scenario, we remove the object that does not matches with the
+                    // filteringObject array.
+                    if (Array.isArray(filteringObject[key])) {
+                        filteringObject[key].map(arrayValue => {
+                            if (!data[key].includes(arrayValue)) {
+                                dataArray.splice( index, 1 );
+                            }
+                        })
+                    }
+                });
+            })
+
+            console.log(dataArray);
+        }
+
+    </script>
+</body>
+
+</html>
